@@ -47,7 +47,7 @@ Vagrant.configure("2") do |config|
     # While config.ssh.private_key_path does include Vagrant's global key, it is overwritten by a provisioner, therefore is not permanent
     # Now, we don't have to insert an auto-gen key at all!
     # This method is adapted from Minwoo Lee, see: https://ermaker.github.io/blog/2015/11/18/change-insecure-key-to-my-own-key-on-vagrant.html
-    system('./create-ssh-key-if-needed.sh') # This line of ruby will run _every_ time you invoke `vagrant...` (even status, etc.!), but the script is set up to only gen a new key the _first_ time
+    system('../scripts/create-ssh-key-if-needed.sh') # This line of ruby will run _every_ time you invoke `vagrant...` (even status, etc.!), but the script is set up to only gen a new key the _first_ time
     web.ssh.private_key_path = ["./id_rsa_vagrant", "~/.vagrant.d/insecure_private_key"]
     web.ssh.insert_key = false
     ssh_public_key_contents = File.readlines("./id_rsa_vagrant.pub").first.strip
