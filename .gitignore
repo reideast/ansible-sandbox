@@ -17,3 +17,5 @@ out/
 
 # Secrets
 id_rsa_*
+secrets/
+!secrets/README.md
