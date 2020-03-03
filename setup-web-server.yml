@@ -1,0 +1,38 @@
+---
+# An Ansible playbook to setup an Apache web server
+# This playbook is enterprise-linux (CentOS, RedHat, Fedora) specific
+
+- name: "Configure a web server with Apache"
+  hosts: webservers
+  tasks:
+    - name: "Copy my .bashrc file"
+      copy:
+        src: remote_server_bashrc.sh
+        dest: .bashrc
+
+    - name: "Source .bashrc in .profile, creating that file if needed"
+      lineinfile:
+        path: .profile
+        line: source ~/.bashrc
+        create: yes
+
+
+    - name: "Install Apache web server"
+      become: yes
+      package:
+        name: httpd
+        state: present
+
+
+    - name: "Setup web server daemon"
+      become: yes
+      block:
+        - name: "Set Apache to run on boot"
+          service:
+            name: httpd
+            enabled: yes
+
+        - name: "Start Apache now"
+          service:
+            name: httpd
+            state: started
