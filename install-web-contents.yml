@@ -1,0 +1,13 @@
+---
+# An Ansible playbook to add the contents of a web site to a web server running apache
+
+- name: "Populate the web server with html files"
+  hosts: webservers
+  vars:
+    webroot: /var/www/html
+  tasks:
+    - name: "Copy index.html file to the server, filling in template values from inventory for this server"
+      become: yes
+      template:
+        src: index.html.j2
+        dest: "{{ webroot }}/index.html"
