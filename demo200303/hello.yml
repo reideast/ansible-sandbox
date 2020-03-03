@@ -1,0 +1,15 @@
+---
+
+- hosts: all
+  tasks:
+      - copy:
+          src: helloworld.txt
+          dest: hello.txt
+        name: "Copy file"
+      - command: cat ~/hello.txt
+        register: output
+        name: "Run cat on server"
+      - debug:
+          msg: "{{ output }}"
+        name: "Report output"
+
