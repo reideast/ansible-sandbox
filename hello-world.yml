@@ -1,0 +1,19 @@
+---
+# A basic Ansible playbook
+
+- name: "Copy a file, view its contents"
+  hosts: all
+  tasks:
+    - name: "Copy file onto to the server"
+      copy:
+        src: hello.txt
+        dest: hello.txt
+
+    - name: "Grab the contents of the file on the server, registering it for later use"
+      command: cat ./hello.txt
+      # This also shows how to run arbitrary bash commands. Useful if there isn't a module for your task!
+      register: hello_results
+
+    - name: "Display results of previous command"
+      debug:
+        msg: "{{ hello_results }}"
